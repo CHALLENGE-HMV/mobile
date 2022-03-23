@@ -3,6 +3,8 @@ import 'package:minha_saude/interfaces/http/helpers/http_helper.dart';
 
 import 'enums/request_type.dart';
 
+import 'dart:convert';
+
 
 class HttpClient {
   const HttpClient._();
@@ -18,6 +20,8 @@ class HttpClient {
   }) {
     if (type == RequestType.get) {
       return http.get(uri, headers: headers);
+    } else if (type == RequestType.post) {
+      return http.post(uri, headers: headers, body: jsonEncode(body));
     }
   }
 

@@ -16,7 +16,7 @@ class BulletItem extends StatelessWidget {
           text: String.fromCharCode(0x2022),
         ),
         SizedBox(width: 10),
-        AppText(text: this.text, color: Colors.white,),
+        Container(width: 310, child: AppText(text: this.text, color: Colors.white,)),
       ],
     );
   }

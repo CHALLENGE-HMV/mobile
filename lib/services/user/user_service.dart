@@ -1,12 +1,21 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:minha_saude/interfaces/http/enums/request_type.dart';
 import 'package:minha_saude/services/user/user_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/api_path.dart';
+import '../../interfaces/http/http_client.dart';
 import '../../models/user.dart';
 
+import 'package:http/http.dart' as http;
+
 class UserService {
+  static User? user;
+
   Future<User?> getUserSession() async {
+    WidgetsFlutterBinding.ensureInitialized();
     final prefs = await SharedPreferences.getInstance();
     final String? userPref = prefs.getString('user');
 
@@ -25,9 +34,24 @@ class UserService {
     return prefs.setString('user', jsonEncode(user));
   }
 
-  Future<void> authenticate(String username, String password) async {
-    // TODO: implement authenticate
-    throw UnimplementedError();
+  Future<bool> authenticate(String username, String password) async {
+    http.Response? response = await HttpClient.send(type: RequestType.post, url: Api.url_login, body: <String, dynamic> {
+      'email': username,
+      'senha': password,
+    });
+    if (response == null) {
+      return false;
+    }
+
+    final dynamic userJson = jsonDecode(response.body);
+    if (userJson['id'] == null) {
+      return false;
+    }
+
+    var userResponse = UserResponse.fromApiJson(userJson);
+    User user = User.fromResponse(userResponse);
+    saveUserSession(user);
+    return true;
   }
 
   Future<bool> setToken(String token) async {

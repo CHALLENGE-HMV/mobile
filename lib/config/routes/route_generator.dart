@@ -7,9 +7,10 @@ import 'package:minha_saude/screens/home.dart';
 import 'package:minha_saude/screens/login.dart';
 import 'package:minha_saude/screens/remedios.dart';
 
+import '../../models/user.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
 
     switch (settings.name) {
       case Routes.login:
