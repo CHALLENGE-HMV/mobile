@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:minha_saude/services/user/user_service.dart';
 
 import 'config/routes/route_generator.dart';
 import 'config/routes/routes.dart';
 
-void main() {
+void main() async {
+  await UserService().getUserSession().then((user) => UserService.user = user);
   runApp(MinhaSaudeApp());
 }
 
@@ -13,7 +15,7 @@ class MinhaSaudeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Minha Saúde',
-      initialRoute: Routes.login,
+      initialRoute: UserService.user == null ? Routes.login : Routes.home,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

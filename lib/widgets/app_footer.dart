@@ -13,9 +13,9 @@ class AppFooter extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _FooterButton(caption: "Consultas", route: Routes.consultas,),
-            _FooterButton(caption: "Remédios", route: Routes.remedios),
-            _FooterButton(caption: "Atividades", route: Routes.atividades),
+            _FooterButton(caption: "Consultas", route: Routes.consultas, icon: Icons.view_agenda_outlined),
+            _FooterButton(caption: "Remédios", route: Routes.remedios, icon: Icons.medical_services_outlined),
+            _FooterButton(caption: "Atividades", route: Routes.atividades, icon: Icons.directions_bike),
           ],
         ), //or row of buttons
         width: MediaQuery.of(context).size.width,
@@ -29,8 +29,9 @@ class AppFooter extends StatelessWidget {
 class _FooterButton extends StatelessWidget {
   final String caption;
   final String route;
+  final IconData icon;
   
-  _FooterButton({Key? key, required this.caption, required this.route}) : super(key: key);
+  _FooterButton({Key? key, required this.caption, required this.route, required this.icon}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _FooterButton extends StatelessWidget {
           Spacer(),
           Expanded(
               child: Icon(
-                Icons.directions_bike,
+                icon,
                 color: Colors.white,
               )),
           Spacer(),

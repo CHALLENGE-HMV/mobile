@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:minha_saude/config/routes/routes.dart';
+import 'package:minha_saude/services/user/user_service.dart';
 import 'package:minha_saude/widgets/app_icons.dart';
 
 class LoginPage extends StatelessWidget {
+  final UserService _userService = UserService();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,12 +87,20 @@ class LoginPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 40,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                controller: _emailController,
+                                style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.person),
+                                  prefixIcon: Icon(Icons.lock),
                                   fillColor: Colors.white,
                                   filled: true,
                                 ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preenchimento obrigatório';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                             SizedBox(height: 30),
@@ -111,12 +124,23 @@ class LoginPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 40,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                controller: _senhaController,
+                                style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.lock),
                                   fillColor: Colors.white,
                                   filled: true,
                                 ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preenchimento obrigatório';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                           ],
@@ -149,7 +173,22 @@ class LoginPage extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () => {
-                        Navigator.of(context).pushNamed(Routes.home)
+                        _userService
+                            .authenticate(
+                                _emailController.text, _senhaController.text)
+                            .then((auth) {
+                          if (auth) {
+                            Navigator.of(context).pushNamed(Routes.home);
+                          } else {
+                            showDialog(context: context, builder: (context) => AlertDialog(
+                              title: Text("Falha ao se autenticar"),
+                              content: Text("E-mail ou senha inválidos"),
+                              actions: [
+                                TextButton(onPressed: () => Navigator.pop(context, "OK"), child: Text("OK"))
+                              ],
+                            )).whenComplete(() => Navigator.of(context).pushNamed(Routes.login));
+                          }
+                        })
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -163,7 +202,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     width: 150,
                     child: ElevatedButton(
-                      onPressed: () => null,
+                      onPressed: () => Navigator.of(context).pushNamed(Routes.registro),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

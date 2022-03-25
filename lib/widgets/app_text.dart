@@ -10,13 +10,16 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      this.text,
-      style: TextStyle(
-        color: this.color,
-        fontSize: AppFontSize.normal,
+    return Tooltip(
+      message: this.text,
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: this.color,
+          fontSize: AppFontSize.normal,
+        ),
+        overflow: TextOverflow.ellipsis,
       ),
-      overflow: TextOverflow.ellipsis,
     );
   }
 }
