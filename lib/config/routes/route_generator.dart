@@ -5,6 +5,7 @@ import 'package:minha_saude/screens/beneficios.dart';
 import 'package:minha_saude/screens/consultas.dart';
 import 'package:minha_saude/screens/home.dart';
 import 'package:minha_saude/screens/login.dart';
+import 'package:minha_saude/screens/registro.dart';
 import 'package:minha_saude/screens/remedios.dart';
 
 import '../../models/user.dart';
@@ -15,6 +16,8 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.login:
         return MaterialPageRoute(builder: (context) => LoginPage());
+      case Routes.registro:
+        return MaterialPageRoute(builder: (context) => RegistroPage());
       case Routes.home:
         return MaterialPageRoute(builder: (context) => HomePage());
       case Routes.beneficios:

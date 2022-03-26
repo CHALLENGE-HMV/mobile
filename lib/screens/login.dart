@@ -158,7 +158,7 @@ class BoxEditFields extends StatelessWidget {
             enableSuggestions: false,
             autocorrect: false,
             controller: _senhaController,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.lock),
               fillColor: Colors.white,
