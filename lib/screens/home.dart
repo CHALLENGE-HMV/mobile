@@ -6,9 +6,32 @@ import 'package:minha_saude/widgets/meus_pontos.dart';
 import 'package:minha_saude/widgets/text_with_under_line.dart';
 
 import '../helpers/date_helper.dart';
+import '../models/user.dart';
 import '../services/user/user_service.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return new _HomePageState();
+  }
+}
+
+class _HomePageState extends State<HomePage>{
+  User? _user;
+  UserService _userService = UserService();
+  String _lastAppointment = '';
+  String _nextAppointment = '';
+
+  _HomePageState(){
+    _userService.getUserSession().then((user) => setState(() {
+      _user = user;
+      if(user != null) {
+        _lastAppointment = DateHelper.parseDateToString(user.lastAppointment);
+        _nextAppointment = DateHelper.parseDateToString(user.nextAppointment);
+      }
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppHeader(
@@ -27,24 +50,24 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithUnderline(
-                      text: 'Olá, ${UserService.user!.name}',
+                      text: 'Olá, ${_user?.name}',
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    AppText(text: 'Registro Nº: ${UserService.user!.register}'),
+                    AppText(text: 'Registro Nº: ${_user?.register}'),
                     SizedBox(
                       height: 5,
                     ),
-                    AppText(text: 'Última consulta em: ${DateHelper.parseDateToString(UserService.user!.lastAppointment)}'),
+                    AppText(text: 'Última consulta em: $_lastAppointment'),
                     SizedBox(
                       height: 5,
                     ),
-                    AppText(text: 'Próxima consulta em: ${DateHelper.parseDateToString(UserService.user!.nextAppointment)}'),
+                    AppText(text: 'Próxima consulta em: $_nextAppointment'),
                     SizedBox(
                       height: 5,
                     ),
-                    AppText(text: 'Pontos: ${UserService.user!.points.toString()}'),
+                    AppText(text: 'Pontos: ${_user?.points}'),
                   ],
                 ),
               ),
@@ -56,3 +79,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
