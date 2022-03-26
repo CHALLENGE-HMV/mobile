@@ -15,81 +15,7 @@ class LoginPage extends StatelessWidget {
         body: Center(
           child: MainWidget(),
         ),
-        bottomNavigationBar: BoxFooter());
-  }
-}
-
-class BottomButtons extends StatelessWidget {
-  final UserService _userService = UserService();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        border: Border(
-          top: BorderSide(
-            color: Colors.orange,
-            width: 5,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            width: 150,
-            child: ElevatedButton(
-              onPressed: () => {
-                _userService
-                    .authenticate(_emailController.text, _senhaController.text)
-                    .then((auth) {
-                  if (auth) {
-                    Navigator.of(context).pushNamed(Routes.home);
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text("Falha ao se autenticar"),
-                              content: Text("E-mail ou senha inválidos"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, "OK"),
-                                    child: Text("OK"))
-                              ],
-                            )).whenComplete(
-                        () => Navigator.of(context).pushNamed(Routes.login));
-                  }
-                })
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(AppIcons.user_check),
-                  Text("Entrar"),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 150,
-            child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.registro),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image(image: AssetImage('assets/images/register_icon.png')),
-                  Text("Registrar"),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        bottomNavigationBar: BottomButtonsBar()
     );
   }
 }
@@ -123,7 +49,7 @@ class ContainerIdentifyForm extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           BoxIdentifyLabel(),
-          BoxEditFields(),
+          BoxEditFields()
         ],
       ),
     );
@@ -274,106 +200,111 @@ class LogoApp extends StatelessWidget {
   }
 }
 
-class BoxFooter extends StatelessWidget {
+class ButtonLogin extends StatelessWidget {
+
   final UserService _userService = UserService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
 
+  void _onPressed_Login(BuildContext context){
+    _userService
+        .authenticate(_emailController.text, _senhaController.text)
+        .then((auth) {
+      if (auth) {
+        Navigator.of(context).pushNamed(Routes.home);
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Falha ao se autenticar"),
+              content: Text("E-mail ou senha inválidos"),
+              actions: [
+                TextButton(
+                    onPressed: () =>
+                        Navigator.pop(context, "OK"),
+                    child: Text("OK"))
+              ],
+            )).whenComplete(
+                () => Navigator.of(context).pushNamed(Routes.login));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    bool _validate(){
-      if(_emailController.text.isEmpty)
-      {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Usuário é obrigatório"),
-              content: Text("Por favor, digite seu e-mail para entrar"),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context, "OK"),
-                    child: Text("OK"))
+    return  SizedBox(
+      width: 150,
+      child: Container(
+        margin: const EdgeInsets.only(left: 10.0),
+        child: ElevatedButton(
+          onPressed: () => { _onPressed_Login(context) },
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(AppIcons.user_check),
+                Text("Entrar"),
               ],
-            )).whenComplete(
-                () => Navigator.of(context).pushNamed(Routes.login));
-
-        return false;
-      }
-
-      if(_senhaController.text.isEmpty)
-      {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Senha é obrigatória"),
-              content: Text("Por favor, digite sua senha para entrar"),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context, "OK"),
-                    child: Text("OK"))
-              ],
-            )).whenComplete(
-                () => Navigator.of(context).pushNamed(Routes.login));
-
-        return false;
-      }
-
-      return true;
-    }
-
-    void _login() {
-      if(_validate()) {
-        _userService
-            .authenticate(_emailController.text, _senhaController.text)
-            .then((auth) {
-          if (auth) {
-            Navigator.of(context).pushNamed(Routes.home);
-          } else {
-            showDialog(
-                context: context,
-                builder: (context) =>
-                    AlertDialog(
-                      title: Text("Falha ao se autenticar"),
-                      content: Text("E-mail ou senha inválidos"),
-                      actions: [
-                        TextButton(
-                            onPressed: () => Navigator.pop(context, "OK"),
-                            child: Text("OK"))
-                      ],
-                    )).whenComplete(
-                    () => Navigator.of(context).pushNamed(Routes.login));
-          }
-        });
-      }
-    }
-
-    void _register() {
-      Navigator.of(context).pushNamed(Routes.registro);
-    }
-
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: Icon(AppIcons.user_check), label: 'Entrar'),
-        BottomNavigationBarItem(
-          icon: Icon(AppIcons.user_plus),
-          label: 'Registrar',
+            ),
+          ),
         ),
-      ],
-      //currentIndex: _selectedIndex,
-      selectedItemColor: Colors.blue[600],
-      type: BottomNavigationBarType.fixed,
-      onTap: (int index){
-        switch(index){
-          case 0:
-            _login();
-            break;
-          case 1:
-            _register();
-            break;
-        }
-      },
+      ),
+    );
+  }
+}
+
+class ButtonRegister extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return  SizedBox(
+        width: 150,
+        child: Container(
+          margin: const EdgeInsets.only(right: 10.0),
+          child: ElevatedButton(
+            onPressed: () => Navigator.of(context).pushNamed(Routes.registro),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image(image: AssetImage('assets/images/register_icon.png')),
+                  Text("Registrar"),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+}
+
+class BottomButtonsBar extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border(
+            top: BorderSide(
+              color: Colors.orange,
+              width: 5,
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ButtonLogin(),
+            ButtonRegister()
+          ],
+        ),
+      ),
+      color: Colors.grey,
     );
   }
 }
