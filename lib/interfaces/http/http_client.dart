@@ -34,9 +34,9 @@ class HttpClient {
     try {
       final _header = _getHeaders();
       final _url = HttpHelper.concatQueryString(url, queryParams);
-      return await _createRequest(
-          type: type, uri: Uri.parse(_url), headers: _header, body: body);
+      return await _createRequest(type: type, uri: Uri.parse(_url), headers: _header, body: body);
     } catch (ex) {
+      print('HTTP Client Error ${ex.toString()}');
       return null;
     }
   }
