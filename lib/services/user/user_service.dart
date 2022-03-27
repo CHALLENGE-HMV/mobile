@@ -36,11 +36,17 @@ class UserService {
 
   Future<bool> authenticate(String username, String password) async {
     http.Response? response = await HttpClient.send(type: RequestType.post, url: Api.url_login, body: <String, dynamic> {
-      'email': username,
-      'senha': password,
+      'username': username,
+      'password': password,
     });
 
-    return _handleResponse(response);
+    bool isAuth = _handleResponseAuth(response);
+    if(isAuth){
+      User? user = await findByEmail(username);
+      await saveUserSession(user!);
+    }
+
+    return isAuth;
   }
 
   Future<bool> register(String name, String email, String password) async {
@@ -53,25 +59,57 @@ class UserService {
     return _handleResponse(response);
   }
 
+  Future<User?> findByEmail(String email) async {
+    http.Response? response = await HttpClient.send(type: RequestType.get, url: "${Api.url_users}/$email");
 
-  bool _handleResponse(http.Response? response) {
+    dynamic userJson = _handleResponse(response);
+    if (userJson['id'] == null) {
+      return null;
+    }
+
+    var userResponse = UserResponse.fromApiJson(userJson);
+    User user = User.fromResponse(userResponse);
+
+    return user;
+  }
+
+  dynamic _handleResponse(http.Response? response) {
+    if (response == null) {
+      return false;
+    }
+
+    final dynamic respJson = jsonDecode(response.body);
+    return respJson;
+  }
+
+  bool _handleResponseAuth(http.Response? response) {
     if (response == null) {
       return false;
     }
 
     final dynamic userJson = jsonDecode(response.body);
-    if (userJson['id'] == null) {
-      return false;
+    if (userJson['access_token'] != null) {
+      setToken(userJson['access_token']);
+      return true;
     }
 
-    var userResponse = UserResponse.fromApiJson(userJson);
-    User user = User.fromResponse(userResponse);
-    saveUserSession(user);
-    return true;
+    return false;
   }
 
   Future<bool> setToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString('token', token);
+  }
+
+  Future<bool> setEmailSession(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setString('email', email);
+  }
+
+  Future<String> getEmailSession() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final prefs = await SharedPreferences.getInstance();
+    final String? userPref = prefs.getString('email');
+    return userPref!;
   }
 }

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:minha_saude/config/routes/routes.dart';
-import 'package:minha_saude/constants/api_path.dart';
 import 'package:minha_saude/services/user/user_service.dart';
 import 'package:minha_saude/widgets/app_icons.dart';
 
-class LoginPage extends StatelessWidget {
-  final UserService _userService = UserService();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _senhaController = TextEditingController();
 
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,9 +85,6 @@ class BoxIdentifyLabel extends StatelessWidget {
 }
 
 class BoxEditFields extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -200,11 +195,14 @@ class LogoApp extends StatelessWidget {
   }
 }
 
-class ButtonLogin extends StatelessWidget {
+class ButtonLogin extends StatefulWidget {
+  @override
+  State<ButtonLogin> createState() => _ButtonLoginState();
+}
+
+class _ButtonLoginState extends State<ButtonLogin>{
 
   final UserService _userService = UserService();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
 
   void _onPressed_Login(BuildContext context){
     _userService
@@ -252,6 +250,7 @@ class ButtonLogin extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class ButtonRegister extends StatelessWidget {

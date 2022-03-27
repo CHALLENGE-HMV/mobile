@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage>{
     _userService.getUserSession().then((user) => setState(() {
       _user = user;
       if(user != null) {
-        _lastAppointment = DateHelper.parseDateToString(user.lastAppointment);
-        _nextAppointment = DateHelper.parseDateToString(user.nextAppointment);
+        _lastAppointment = DateHelper.parseDateToString(user.lastAppointment!);
+        _nextAppointment = DateHelper.parseDateToString(user.nextAppointment!);
       }
     }));
   }

@@ -4,22 +4,22 @@ import 'package:minha_saude/services/user/user_response.dart';
 class User {
   final int id;
   final String email;
-  final String name;
-  final String register;
-  final int points;
-  final DateTime birthdate;
-  final DateTime lastAppointment;
-  final DateTime nextAppointment;
+  final String? name;
+  final String? register;
+  final int? points;
+  final DateTime? birthdate;
+  final DateTime? lastAppointment;
+  final DateTime? nextAppointment;
 
   const User({
     required this.id,
     required this.email,
-    required this.name,
-    required this.register,
-    required this.points,
-    required this.birthdate,
-    required this.lastAppointment,
-    required this.nextAppointment
+    this.name,
+    this.register,
+    this.points,
+    this.birthdate,
+    this.lastAppointment,
+    this.nextAppointment
   });
 
   factory User.fromResponse(UserResponse resp) {
@@ -41,9 +41,9 @@ class User {
         'email': email,
         'register': register,
         'points': points,
-        'birthdate': DateHelper.parseDateTimeToString(birthdate),
-        'last_appointment': DateHelper.parseDateToString(lastAppointment),
-        'next_appointment': DateHelper.parseDateToString(nextAppointment),
+        'birthdate': DateHelper.parseDateTimeToString(birthdate!),
+        'last_appointment': DateHelper.parseDateToString(lastAppointment!),
+        'next_appointment': DateHelper.parseDateToString(nextAppointment!),
       };
 
   @override
