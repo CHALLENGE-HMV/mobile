@@ -39,6 +39,22 @@ class UserService {
       'email': username,
       'senha': password,
     });
+
+    return _handleResponse(response);
+  }
+
+  Future<bool> register(String name, String email, String password) async {
+    http.Response? response = await HttpClient.send(type: RequestType.post, url: Api.url_register, body: <String, dynamic> {
+      'nome' : name,
+      'email': email,
+      'senha': password,
+    });
+
+    return _handleResponse(response);
+  }
+
+
+  bool _handleResponse(http.Response? response) {
     if (response == null) {
       return false;
     }

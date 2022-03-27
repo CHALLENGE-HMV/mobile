@@ -11,5 +11,5 @@ class Api {
   static const url_appointments_scheduled = '$_host$_path_appointments_scheduled';
   static const url_activities = '$_host$_path_activities';
   static const url_login = '$_host$_path_users/login';
-  static const url_register = '$_host$_path_users/register';
+  static const url_register = '$_host$_path_users';
 }

@@ -4,8 +4,9 @@ import 'app_footer.dart';
 
 class AppHeader extends StatelessWidget {
   final Widget child;
+  final bool register;
 
-  AppHeader({Key? key, required this.child}) : super(key: key);
+  AppHeader({Key? key, required this.child, this.register=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class AppHeader extends StatelessWidget {
           child: child,
         ),
         extendBody: true,
-        bottomNavigationBar: AppFooter(),
+        bottomNavigationBar: register ? Container() : AppFooter(),
       ),
     );
   }

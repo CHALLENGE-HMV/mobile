@@ -65,30 +65,33 @@ class _ConsultasPageState extends State<ConsultasPage> {
                           bottom: BorderSide(color: AppColors.grey),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          AppText(text: "Agendadas"),
-                          SizedBox(width: 15),
-                          DropdownButtonHideUnderline(
-                            child: ButtonTheme(
-                              child: DropdownButton<int>(
-                                items: years.map((int year) {
-                                  return DropdownMenuItem(
-                                    child: Text(year.toString()),
-                                    value: year,
-                                  );
-                                }).toList(),
-                                value: selectedValueAgendada,
-                                style: TextStyle(color: Colors.black),
-                                onChanged: (newVal) {
-                                  setState(() {
-                                    selectedValueAgendada = newVal!;
-                                  });
-                                },
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            AppText(text: "Agendadas"),
+                            SizedBox(width: 15),
+                            DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                child: DropdownButton<int>(
+                                  items: years.map((int year) {
+                                    return DropdownMenuItem(
+                                      child: Text(year.toString()),
+                                      value: year,
+                                    );
+                                  }).toList(),
+                                  value: selectedValueAgendada,
+                                  style: TextStyle(color: Colors.black),
+                                  onChanged: (newVal) {
+                                    setState(() {
+                                      selectedValueAgendada = newVal!;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     FutureBuilder<List<Appointment>>(
@@ -118,30 +121,33 @@ class _ConsultasPageState extends State<ConsultasPage> {
                           bottom: BorderSide(color: AppColors.grey),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          AppText(text: "Realizadas"),
-                          SizedBox(width: 15),
-                          DropdownButtonHideUnderline(
-                            child: ButtonTheme(
-                              child: DropdownButton<int>(
-                                items: years.map((int year) {
-                                  return DropdownMenuItem(
-                                    child: Text(year.toString()),
-                                    value: year,
-                                  );
-                                }).toList(),
-                                value: selectedValueRealizada,
-                                style: TextStyle(color: Colors.black),
-                                onChanged: (newVal) {
-                                  setState(() {
-                                    selectedValueRealizada = newVal!;
-                                  });
-                                },
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            AppText(text: "Realizadas"),
+                            SizedBox(width: 15),
+                            DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                child: DropdownButton<int>(
+                                  items: years.map((int year) {
+                                    return DropdownMenuItem(
+                                      child: Text(year.toString()),
+                                      value: year,
+                                    );
+                                  }).toList(),
+                                  value: selectedValueRealizada,
+                                  style: TextStyle(color: Colors.black),
+                                  onChanged: (newVal) {
+                                    setState(() {
+                                      selectedValueRealizada = newVal!;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     FutureBuilder<List<Appointment>>(
