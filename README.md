@@ -1,16 +1,55 @@
-# minha_saude
+# FIAP - CHANLLENGE/HMV - Grupo9
 
-Project to keep track of patient medical history
+# backend-java
+Estrutura de projeto api para o aplicativo minha saúde
 
-## Getting Started
+# url projects:
+https://github.com/CHALLENGE-HMV/backend-java
+https://github.com/CHALLENGE-HMV/mobile
+---
+## Framework e IDE
 
-This project is a starting point for a Flutter application.
+* min: java sdk 1.8;
+* banco: postgresql
 
-A few resources to get you started if this is your first Flutter project:
+---
+## Steps dev
+* install java development kit 1.8;
+* install docker
+* install image postgreesql from docker.hub
+* run the project with your IDE.
+* you can test the webapi with swagger: http://localhost:8080/swagger-ui/index.html
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+--
+## Steps release
+* install docker
+* install docker-compose
+* run your bash command window
+* go to directory root project
+* execute:
+``docker-compose up``
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## `APP Mobile`
+Install flutter by the steps:
+https://docs.flutter.dev/get-started/install
+
+Afet install Android Studio IDE: https://developer.android.com/studio/install
+* Run the IDE and install Flutter plugin;
+* Install SDK manager
+* Create a new device with Device Manager;
+* start the device
+* run the project
+
+** You need run docker-compose to interact with backend; The app need to call the backend web apis;
+
+## Contributors
+Dayany Espíndola: https://github.com/dayanyrec
+
+Felipe : https://github.com/feayoub
+
+George Furtado: https://github.com/georgefurtado
+
+Samanta de Araujo: https://github.com/samantadearaujo
+
+Wellyton: https://github.com/WellytonDev
+
