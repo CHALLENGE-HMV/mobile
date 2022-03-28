@@ -11,6 +11,8 @@ https://github.com/CHALLENGE-HMV/mobile
 
 * min: java sdk 1.8;
 * banco: postgresql
+* Android Studio
+* Intellij
 
 ---
 ## Steps dev
