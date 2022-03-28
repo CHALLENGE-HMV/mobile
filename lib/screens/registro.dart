@@ -23,7 +23,7 @@ class RegistroPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LeadingLogo(),
+            LeadingLogo(register: true),
             TextWithUnderline(text: "Registre-se"),
             SizedBox(height: 10),
             Column(

@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:minha_saude/config/routes/routes.dart';
 
 class LeadingLogo extends StatelessWidget {
+  final bool register;
+
+  const LeadingLogo({Key? key, this.register=false}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(Routes.home);
+          if (register)
+            Navigator.of(context).pushNamed(Routes.login);
+          else
+            Navigator.of(context).pushNamed(Routes.home);
         },
         child: Container(
           padding: EdgeInsets.all(50),
